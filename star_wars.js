@@ -12,30 +12,34 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Verificar si se encontraron resultados
                 if (data.count > 0) {
                     // Obtener el ID del primer resultado (asumiendo que Luke Skywalker es el primer resultado)
-                    const lukeId = data.results[0].url.split("/")[5];
+                    const characterId = data.results[0].url.split("/")[5];
                     
-                    // Hacer una solicitud GET al endpoint específico de Luke Skywalker utilizando su ID
-                    const lukeResponse = await fetch(`https://swapi.dev/api/people/${lukeId}/`);
+                    // Hacer una solicitud GET al endpoint específico del personaje utilizando su ID
+                    const characterResponse = await fetch(`https://swapi.dev/api/people/${characterId}/`);
                     
                     // Verificar si la solicitud fue exitosa (código de estado 200)
-                    if (lukeResponse.ok) {
-                        const lukeData = await lukeResponse.json();
+                    if (characterResponse.ok) {
+                        const characterData = await characterResponse.json();
                         
-                        // Mostrar información sobre Luke Skywalker en la página
-                        document.getElementById("name").textContent = lukeData.name;
-                        document.getElementById("height").textContent = lukeData.height;
-                        document.getElementById("mass").textContent = lukeData.mass;
-                        document.getElementById("hair_color").textContent = lukeData.hair_color;
-                        document.getElementById("eye_color").textContent = lukeData.eye_color;
-                        document.getElementById("birth_year").textContent = lukeData.birth_year;
+                        // Mostrar información sobre el personaje en la página
+                        document.getElementById("name").textContent = characterData.name;
+                        document.getElementById("height").textContent = characterData.height;
+                        document.getElementById("mass").textContent = characterData.mass;
+                        document.getElementById("hair_color").textContent = characterData.hair_color;
+                        document.getElementById("eye_color").textContent = characterData.eye_color;
+                        document.getElementById("birth_year").textContent = characterData.birth_year;
+
+                        // Agregar avatar del personaje utilizando Star Wars Visual Guide
+                        document.getElementById("characterAvatar").src = `https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`;
                         
-                        // Mostrar la sección de información
+                        // Mostrar la imagen y la sección de información
+                        document.getElementById("characterAvatar").style.display = "block";
                         document.getElementById("informacionPersonaje").style.display = "block";
                     } else {
-                        console.error("Error al obtener información sobre Luke Skywalker.");
+                        console.error("Error al obtener información sobre el personaje.");
                     }
                 } else {
-                    console.error("No se encontró información sobre Luke Skywalker.");
+                    console.error("No se encontró información sobre el personaje.");
                 }
             } else {
                 console.error("Error al conectar con la API de Star Wars.");
